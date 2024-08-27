@@ -4,7 +4,7 @@ import L, { LatLng } from 'leaflet';
 import { Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 
-import { FaThumbsUp, FaThumbsDown, FaRegMap } from 'react-icons/fa';
+// import { FaThumbsUp, FaThumbsDown, FaRegMap } from 'react-icons/fa';
 import { BsArrow90DegRight } from 'react-icons/bs';
 
 import { IMarker } from '../../interfaces/IMarker';
@@ -58,56 +58,41 @@ function LocationMarkers({
     html: `<div style="${selectedMarkerHtmlStyles}" />`,
   });
 
-  const getData = () => {
-    setLoading(true);
-    fetch(`${import.meta.env.API_URL}/list-all-points`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${import.meta.env.BEARER_TOKEN}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.STATUS === 'SUCCESS') {
-          setMarkers(
-            res.DATA.map((el) => ({
-              id: el.idx,
-              lat: el.lat,
-              long: el.long,
-              color: el.point_color_code,
-              likes: el.likes,
-              dislikes: el.dislikes,
-              address: el.img_name,
-              directionsUrl: el.GOOGLE_MAPS_URL,
-            })),
-          );
-        } else {
-          setError(true);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(true);
-        console.error(err);
-      });
-  };
-
   useEffect(() => {
     if (markers.length === 0 && !isLoading && !isError) {
-      getData();
+      setLoading(true);
+      fetch(`${import.meta.env.VITE_API_URL}/list-all-points`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.STATUS === 'SUCCESS') {
+            setMarkers(res.DATA as IMarker[]);
+          } else {
+            setError(true);
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError(true);
+          console.error(err);
+        });
     }
-  });
+  }, [markers, isLoading, isError, setLoading]);
 
   return (
     <MarkerClusterGroup chunkedLoading>
       {markers.map((marker, i) => (
         <Marker
           key={i}
-          position={new LatLng(marker.lat, marker.long)}
+          position={new LatLng(marker.lat, marker.lon)}
           icon={
             marker.lat === selectedMarker?.lat &&
-            marker.long === selectedMarker.long
+            marker.lon === selectedMarker.lon
               ? selectedIcon
               : icon(marker.color ?? '#FFFFFF')
           }
@@ -117,45 +102,29 @@ function LocationMarkers({
               selectMarker(marker);
               event.target.closePopup();
             },
-            mouseover: (event) => {
-              if (
-                marker.lat !== selectedMarker?.lat ||
-                marker.long !== selectedMarker.long
-              ) {
-                event.target.openPopup();
-              }
-            },
+            // mouseover: (event) => {
+            //   if (
+            //     marker.lat !== selectedMarker?.lat ||
+            //     marker.lon !== selectedMarker.lon
+            //   ) {
+            //     event.target.openPopup();
+            //   }
+            // },
           }}
         >
           <Popup>
             <div className="m-2 flex flex-col">
               <div className="justify-content flex min-w-[12rem] items-center gap-2">
-                <div className="w-3/5 whitespace-normal">{marker.address}</div>
                 <div className="flex w-2/5 justify-end gap-1">
                   <button
                     className="flex h-8 w-8 items-center justify-center rounded-full bg-nilg-blue"
                     onClick={() =>
-                      setDestination(`coords:${marker.lat},${marker.long}`)
+                      setDestination(`coords:${marker.lat},${marker.lon}`)
                     }
                   >
                     <BsArrow90DegRight className="text-sm font-semibold text-white" />
                   </button>
-                  <a
-                    href={marker.directionsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <button className="flex h-8 w-8 items-center justify-center rounded-full border border-nilg-gray bg-white">
-                      <FaRegMap className="text-sm font-semibold !text-nilg-blue" />
-                    </button>
-                  </a>
                 </div>
-              </div>
-              <div className="mt-2 flex items-center text-slate-300">
-                <FaThumbsUp />
-                <span className="ml-1">{marker.likes}</span>
-                <FaThumbsDown className="ml-5" />
-                <span className="ml-1">{marker.dislikes}</span>
               </div>
             </div>
           </Popup>

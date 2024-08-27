@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IMarker } from './interfaces/IMarker';
-import CookieBanner from './components/cookie-banner/CookieBanner';
+// import CookieBanner from './components/cookie-banner/CookieBanner';
 import Header from './components/header/Header';
 import Map from './components/map/Map';
 import Sidebar from './components/sidebar/Sidebar';
@@ -74,7 +74,7 @@ function App() {
           ></Map>
         </div>
       </div>
-      <CookieBanner />
+      {/* <CookieBanner /> */}
     </>
   );
 }

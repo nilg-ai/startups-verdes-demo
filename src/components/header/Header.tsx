@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import SearchInput from './SearchInput';
 import Brand from './Brand';
 import { Dialog } from '@headlessui/react';
 import { FaBars } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 
-function Header({ searchChange }: { searchChange: (value: string) => void }) {
+function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -25,9 +24,7 @@ function Header({ searchChange }: { searchChange: (value: string) => void }) {
             <FaBars className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="ml-6 hidden sm:flex sm:gap-x-12">
-          <SearchInput searchChange={searchChange} />
-        </div>
+
         <div className="hidden sm:flex sm:flex-1 sm:justify-end">
           <a
             href="https://nilg.ai/safejourney/"
@@ -59,11 +56,7 @@ function Header({ searchChange }: { searchChange: (value: string) => void }) {
               <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
-            <div className="divide-y divide-gray-500/10">
-              <SearchInput searchChange={searchChange} />
-            </div>
-          </div>
+
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="py-3">

@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import { IMarker } from '../../interfaces/IMarker';
 import { FaThumbsUp, FaThumbsDown, FaRegMap } from 'react-icons/fa';
-import { BsArrow90DegRight } from 'react-icons/bs';
+// import { BsArrow90DegRight } from 'react-icons/bs';
 import Feature from '../feature/Feature';
 import getCookie from '../../utils/get-cookie';
 import Spinner from '../Spinner';
 
 const MarkerDetail = ({
   selectedMarker,
-  setDestination,
 }: {
   selectedMarker: IMarker | null;
-  setDestination: (destination: string) => void;
 }) => {
   const [selectedMarkerDetail, setMarkerDetail] = useState<IMarker | undefined>(
     undefined,
@@ -23,30 +21,30 @@ const MarkerDetail = ({
 
   useEffect(() => {
     if (selectedMarker) {
-      getMarkerDetails(selectedMarker.lat, selectedMarker.long);
+      getMarkerDetails(selectedMarker.lat, selectedMarker.lon);
     }
   }, [selectedMarker]);
 
-  const getMarkerDetails = async (lat: number, long: number) => {
+  const getMarkerDetails = async (lat: number, lon: number) => {
     setLoading(true);
     setVote(false);
 
     fetch(
-      `${import.meta.env.API_URL}/get-point-metadata?lat=${lat}&longt=${long}`,
+      `${import.meta.env.VITE_API_URL}/get-point-metadata?lat=${lat}&lon=${lon}`,
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.BEARER_TOKEN}`,
+          Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`,
         },
       },
     )
       .then((res) => res.json())
       .then((res) => {
         if (res.STATUS === 'SUCCESS') {
-          const marker = res.DATA[0];
+          const marker = res.DATA;
           setMarkerDetail({
             lat: marker.lat,
-            long: marker.long,
+            lon: marker.long,
             likes: marker.likes,
             dislikes: marker.dislikes,
             directionsUrl: marker.GOOGLE_MAPS_URL,
@@ -67,20 +65,20 @@ const MarkerDetail = ({
       });
   };
 
-  const onAction = (lat?: number, long?: number, like: boolean = true) => {
+  const onAction = (lat?: number, lon?: number, like: boolean = true) => {
     setLikeLoading(true);
     const cookie: string | undefined = getCookie('userId');
     fetch(
       `${
-        import.meta.env.API_URL
-      }/point-feedback?lat=${lat}&longt=${long}&is_like=${like}&cookie=${
-        cookie ? cookie : ''
+        import.meta.env.VITE_API_URL
+      }/point-feedback?lat=${lat}&lon=${lon}&is_like=${like}&cookie=${
+        cookie ? cookie : 'abcd1'
       }`,
       {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.BEARER_TOKEN}`,
+          Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`,
         },
         body: JSON.stringify({}),
       },
@@ -91,7 +89,7 @@ const MarkerDetail = ({
           const marker = res.DATA[0];
           setMarkerDetail({
             lat: marker.lat,
-            long: marker.long,
+            lon: marker.long,
             likes: marker.likes,
             dislikes: marker.dislikes,
             directionsUrl: marker.GOOGLE_MAPS_URL,
@@ -133,19 +131,19 @@ const MarkerDetail = ({
           </div>
           <hr className="my-3" />
           <div className="mt-3 flex justify-center gap-10">
-            <div className="flex flex-col items-center">
+            {/* <div className="flex flex-col items-center">
               <button
                 className="flex h-14 w-14 items-center justify-center rounded-full bg-nilg-blue"
                 onClick={() =>
                   setDestination(
-                    `coords:${selectedMarker?.lat},${selectedMarker?.long}`,
+                    `coords:${selectedMarker?.lat},${selectedMarker?.lon}`,
                   )
                 }
               >
                 <BsArrow90DegRight className="text-2xl font-semibold text-white" />
               </button>
               <div className="mt-1 text-xs font-semibold">Directions</div>
-            </div>
+            </div> */}
             <div className="flex flex-col items-center">
               <a
                 href={selectedMarkerDetail?.directionsUrl}
@@ -190,7 +188,7 @@ const MarkerDetail = ({
                     onClick={() =>
                       onAction(
                         selectedMarkerDetail?.lat,
-                        selectedMarkerDetail?.long,
+                        selectedMarkerDetail?.lon,
                       )
                     }
                     className="flex h-20 w-20 items-center justify-center rounded-full bg-white"
@@ -204,7 +202,7 @@ const MarkerDetail = ({
                     onClick={() =>
                       onAction(
                         selectedMarkerDetail?.lat,
-                        selectedMarkerDetail?.long,
+                        selectedMarkerDetail?.lon,
                         false,
                       )
                     }

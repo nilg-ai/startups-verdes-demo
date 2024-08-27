@@ -50,10 +50,10 @@ function Map({
 
   const MapEvents = () => {
     useMapEvents({
-      contextmenu: (event) => {
-        setCursorPos(event.latlng);
-        setShowDirectionsPopup(true);
-      },
+      //   contextmenu: (event) => {
+      //     setCursorPos(event.latlng);
+      //     setShowDirectionsPopup(true);
+      //   },
       popupclose: () => {
         setCursorPos(null);
       },

@@ -1,7 +1,7 @@
 function Brand() {
   return (
     <div className="flex flex-col items-start">
-      <div className="text-xl font-black text-gray-900">SafeJourney</div>
+      <div className="text-xl font-black text-gray-900">Startups Verdes</div>
       <div className="flex text-xs font-semibold text-gray-900">
         by
         <img

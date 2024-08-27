@@ -45,11 +45,11 @@ function Directions({
       selectRoute(null);
 
       fetch(
-        `${import.meta.env.API_URL}/get-route?origin=${originValue}&destination=${destinationValue}&wheelchair_type=${selectedType}`,
+        `${import.meta.env.VITE_API_URL}/get-route?origin=${originValue}&destination=${destinationValue}&wheelchair_type=${selectedType}`,
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.BEARER_TOKEN}`,
+            Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`,
           },
         },
       )

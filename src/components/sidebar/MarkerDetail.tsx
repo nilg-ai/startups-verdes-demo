@@ -72,7 +72,7 @@ const MarkerDetail = ({
       `${
         import.meta.env.VITE_API_URL
       }/point-feedback?lat=${lat}&lon=${lon}&is_like=${like}&cookie=${
-        cookie ? cookie : 'abcd1'
+        cookie ? cookie : ''
       }`,
       {
         method: 'PUT',

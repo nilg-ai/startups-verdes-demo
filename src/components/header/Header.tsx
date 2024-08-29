@@ -8,7 +8,7 @@ function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white">
+    <header className="fixed bg-white z-50 w-full top-0">
       <nav
         className="mx-auto flex items-center justify-between py-3 px-6"
         aria-label="Global"

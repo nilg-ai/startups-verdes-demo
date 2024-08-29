@@ -62,7 +62,7 @@ function Map({
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       {isLoading ? (
         <div className="absolute z-20 flex h-full w-full items-center justify-center bg-slate-400 opacity-70">
           <Spinner />
@@ -71,7 +71,7 @@ function Map({
         <></>
       )}
       <MapContainer
-        className="relative z-10 h-screen"
+        className="absolute z-10 top-16 bottom-0 left-0 right-0"
         center={[38.75, -9.15]}
         zoom={13}
         ref={setMap}

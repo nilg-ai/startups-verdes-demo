@@ -10,7 +10,7 @@ import { BsArrow90DegRight } from 'react-icons/bs';
 import { IMarker } from '../../interfaces/IMarker';
 import './LocationMarkers.css';
 import 'leaflet/dist/leaflet.css';
-import markerImg from '../../assets/marker.svg';
+import markerImg from '/marker.svg';
 
 function LocationMarkers({
   selectMarker,

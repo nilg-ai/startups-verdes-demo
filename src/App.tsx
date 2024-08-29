@@ -46,32 +46,30 @@ function App() {
   return (
     <>
       <Header></Header>
-      <div className="relative">
-        {isShowingSidebar ? (
-          <div className="md:w-1/2 lg:w-1/3 absolute z-30 h-full w-full sm:w-full">
-            <Sidebar
-              selectedMarker={selectedMarker}
-              closeDetails={onCloseDetails}
-              origin={origin}
-              destination={destination}
-              selectRoute={onSelectedRoute}
-              selectedRoute={selectedRoute}
-              setDirectionRoutes={onSetDirectionRoutes}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-        <div className="relative z-10">
-          <Map
-            selectMarker={onSelectMarker}
-            setOrigin={onSetOrigin}
-            setDestination={onSetDestination}
-            routeClick={onSelectedRoute}
+      {isShowingSidebar ? (
+        <div className="md:w-1/2 lg:w-1/3 absolute z-30 h-full w-full sm:w-full pt-16">
+          <Sidebar
+            selectedMarker={selectedMarker}
+            closeDetails={onCloseDetails}
+            origin={origin}
+            destination={destination}
+            selectRoute={onSelectedRoute}
             selectedRoute={selectedRoute}
-            directionRoutes={directionRoutes}
-          ></Map>
+            setDirectionRoutes={onSetDirectionRoutes}
+          />
         </div>
+      ) : (
+        <></>
+      )}
+      <div className="relative z-10">
+        <Map
+          selectMarker={onSelectMarker}
+          setOrigin={onSetOrigin}
+          setDestination={onSetDestination}
+          routeClick={onSelectedRoute}
+          selectedRoute={selectedRoute}
+          directionRoutes={directionRoutes}
+        ></Map>
       </div>
       <CookieBanner />
     </>

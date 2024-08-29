@@ -48,7 +48,7 @@ const MarkerDetail = ({
             likes: marker.likes,
             dislikes: marker.dislikes,
             directionsUrl: marker.GOOGLE_MAPS_URL,
-            features: marker.features.map((f) => ({
+            features: marker.features.map((f: any) => ({
               label: f.label,
               prob: f.prob,
               icon: f.icon,

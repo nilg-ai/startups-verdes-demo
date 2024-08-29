@@ -45,7 +45,7 @@ function App() {
 
   return (
     <>
-      <Header searchChange={onSetDestination}></Header>
+      <Header></Header>
       <div className="relative">
         {isShowingSidebar ? (
           <div className="md:w-1/2 lg:w-1/3 absolute z-30 h-full w-full sm:w-full">
@@ -57,7 +57,6 @@ function App() {
               selectRoute={onSelectedRoute}
               selectedRoute={selectedRoute}
               setDirectionRoutes={onSetDirectionRoutes}
-              setDestination={onSetDestination}
             />
           </div>
         ) : (

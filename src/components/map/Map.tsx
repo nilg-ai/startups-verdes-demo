@@ -33,7 +33,7 @@ function Map({
   directionRoutes: IRoute[];
 }) {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [showDirectionsPopup, setShowDirectionsPopup] = useState(false);
+  const [showDirectionsPopup] = useState(false);
   const [cursorPos, setCursorPos] = useState<LatLng | null>(null);
   const [map, setMap] = useState<LeafletMap | null>(null);
 
